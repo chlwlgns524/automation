@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.aiden.automation.domain.repository.mybatis.mapper.MerchantMapper">
+    <select
+            id="findCafe24MerchantWithCardByRegDt"
+            parameterType="java.time.LocalDateTime"
+            resultType="com.aiden.automation.domain.repository.mybatis.model.Cafe24MerchantToEmail">
+
+        SELECT mm.merchantno AS merchantNo,
+               mm.krname AS krName,
+               mm.cp_email AS cpEmail,
+               ms.merchantid AS merchantId
+        FROM ms_merchant mm
+                 INNER JOIN merchant_managers mms ON mm.merchantno = mms.merchantno
+                 INNER JOIN merchant_service ms ON mm.merchantno = ms.merchantno
+                 INNER JOIN service_sys ss ON ms.merchantid = ss.merchantid
+        WHERE mm.partnerno IN (220, 221)
+          AND mm.regdt BETWEEN #{regDt} AND now()
+          AND (ss.cardcode = 'C001' AND ss.status = 'A001');
+
+    </select>
+</mapper>
