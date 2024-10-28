@@ -1,0 +1,15 @@
+spring:
+    profiles:
+        active: prod
+
+    jpa:
+        hibernate:
+            ddl-auto: none
+        show-sql: true
+        open-in-view: false
+
+mybatis:
+    mapper-locations: classpath:mapper/*.xml
+    type-aliases-package:
+    configuration:
+        map-underscore-to-camel-case: true
